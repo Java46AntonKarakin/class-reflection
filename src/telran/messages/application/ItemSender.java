@@ -42,18 +42,11 @@ public class ItemSender implements Item {
 	}
 
 	private String getAdress(InputOutput io)
-			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		var methods = clazz.getDeclaredMethods();
-		final String[] regex = new String[1];
-		for (var met : methods) {
-			if (met.getName().equals("getRegex")) {
-				regex[0] = met.invoke(null).toString();
-				break;
-			}
-		}
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		String regex = clazz.getMethod("getRegex").invoke(null).toString();
 		return io.readPredicate(String.format("insert adress according to message type: %s", clazz.getName()),
 				"wrong address. Try again.", adress -> {
-					return adress.matches(regex[0]);
+					return adress.matches(regex);
 				});
 	}
 
