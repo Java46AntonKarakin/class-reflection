@@ -14,15 +14,11 @@ public class Validator {
 		List<Field> listOfAnnotatedFields = Arrays.stream(obj.getClass().getDeclaredFields())
 				.peek(x -> System.out.println(x.getAnnotations()!=null))
 				.filter(field -> field.getAnnotations()!=null && field.getAnnotations().length > 0)
-				
 				.toList();
-		
-		System.out.println(listOfAnnotatedFields.size());
 		
 		listOfAnnotatedFields.stream().forEach(field -> {
 			var arrayOfAnnotations = field.getAnnotations();
 			for (var annotation: arrayOfAnnotations) {
-//				System.out.println("annot Name = " + annotation.annotationType().getSimpleName());samsung tab
 				String methodName = "validate"+annotation.annotationType().getSimpleName();
 				 try {
 					String tempRes = (String) AnnotationsProcessor.class
